@@ -1,0 +1,41 @@
+* {
+  background-color: #fcfcfc;
+  font-family: "NanumSquare";
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold;
+  background-color: #f0e3f8;
+  padding: 10px 0px 10px 0px;
+}
+
+.content {
+  font-size: 20px;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+#searchInput {
+  width: 500px;
+  height: 30px;
+  padding: 5px;
+  margin: 30px 0px 50px 50px;
+  border-radius: 5px;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+tbody {
+  text-align: center;
+}
+
+table {
+  margin: 50px 50px 50px 50px;
+}

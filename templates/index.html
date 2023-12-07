@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>숏핑 Helper!</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
+    <style>
+      #searchInput {
+        width: 200px;
+        padding: 5px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">숏핑 Helper</h1>
+    <div class="content">당신의 쇼핑 시간을 줄여드려요!</div>
+    <input
+      type="text"
+      id="searchInput"
+      onkeyup="searchTable()"
+      placeholder="상품 검색..."
+    />
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>My Money Decision</th>
+          <!-- Added column for decision -->
+          <th>WordCloud</th>
+          <!-- 워드클라우드 열 추가 -->
+        </tr>
+      </thead>
+      <tbody>
+        {% set displayed_products = [] %} {% for row in data %} {% if
+        row.Product_Name not in displayed_products %}
+        <tr>
+          <td>{{ row.Product_Name }}</td>
+          <td>{{ row.My_Money_Decision }}</td>
+          <!-- Display the decision -->
+          <!-- 새로 추가된 열 -->
+          <td>
+            <!-- 해당 제품명이 리스트에 없으면 워드클라우드 표시 -->
+            <img
+              src="{{ url_for('generate_wordcloud', product_name=row.Product_Name) }}"
+              alt="WordCloud"
+              width="400"
+              height="300"
+            />
+            {% set _ = displayed_products.append(row.Product_Name) %}
+          </td>
+        </tr>
+        {% endif %} {% endfor %}
+      </tbody>
+    </table>
+
+    <script>
+      function searchTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.querySelector("table");
+        tr = table.getElementsByTagName("tr");
+
+        // 각 행을 반복하면서 필터링
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0]; // 첫 번째 열 (Product Name)
+
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
